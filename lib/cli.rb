@@ -12,18 +12,14 @@ class CLI
     end
 
     case options[:subcommand]
-    when 'add'
+    when 'push'
       @tasks = [*@tasks, options[:main_input]]
-    when 'remove'
-      case options[:main_input]
-      when 'all'
-        @tasks = []
-      else
-        position = (options[:main_input] || @tasks.length - 1).to_i
-        @tasks = @tasks.select.with_index do |task, idx|
-          idx != position
-        end
-      end
+    when 'unshift'
+      @tasks = [options[:main_input], *@tasks]
+    when 'pop'
+      @tasks = @tasks.slice(0, @tasks.length - 1) || []
+    when 'shift'
+      @tasks = @tasks.slice(1, @tasks.length) || []
     end
   end
 end
